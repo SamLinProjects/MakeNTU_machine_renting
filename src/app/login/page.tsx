@@ -2,7 +2,8 @@
 import React from "react";
 import { useState, useRef, useContext } from "react";
 import { useRouter } from "next/navigation";
-import InputArea from "../ui/InputArea";
+import InputArea from "../../components/ui/InputArea";
+import { LoginApi } from "../api/login/loginApi";
 
 export default function Login() {
     const usernameRef = useRef<HTMLInputElement>(null);
@@ -28,20 +29,10 @@ export default function Login() {
             return;
         }
         try {
-            // add login logic here
-            const response = await fetch('api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password, permission }),
-            });
-            if (!response.ok) {
-                alert("登入失敗");
-                console.log(response);
-                return;
-            }
+            // const response = await fetch('api/login', {
+            const { token: token } = await LoginApi({ username, password, permission });
 
+            localStorage.setItem("jwt-token", token);
             if (permission === 'contestant')  {
                 router.push(`contestant/${username}`);
             } else if (permission === 'admin') {

@@ -4,7 +4,7 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: "http://localhost:3000",
+        source: "/api/:path*",
         destination: `${process.env.NEXT_PUBLIC_API_URL}/:path*`,
         permanent: true,
       },

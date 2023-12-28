@@ -5,11 +5,11 @@ import { type NextRequest, NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
 export async function POST(request: NextRequest) {
-    const { username, password, permission } = request.body;
+    const { account, password, permission } = request.body;
     try {
         const user = await prisma.user.create({
             data: {
-                account: username,
+                account: account,
                 password: password,
                 permission: permission
             }
@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
         console.log(error);
         return NextResponse.json(
             { error: "Something went wrong" },
-            { status: 500 }
+            {status: 500}
         );
     }
 

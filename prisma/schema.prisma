@@ -25,19 +25,3 @@ model Request {
   comment   String
   status    String
 }
-
-model Account {
-  id        Int     @id @default(autoincrement())
-  name      String
-  password  String
-}
-
-model Request {
-  id        Int     @id @default(autoincrement())
-  group     Int
-  type      String
-  number    Int
-  filename  String
-  comment   String
-  status    String
-}
