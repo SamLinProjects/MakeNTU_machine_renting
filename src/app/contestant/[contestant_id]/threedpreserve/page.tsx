@@ -63,8 +63,7 @@ export default function reserve() {
                     value={pathTemp[2]}
                     />
             </div>
-            
-            <div className="flex items-end w-2/5 h-5" />
+
             <div className="m-3 mb-0.5 w-2/5 flex items-center gap-2">
                 {/* <p className="font-bold flex-end w-1/4 text-right">機台類型：</p>
                 <select 
@@ -81,8 +80,8 @@ export default function reserve() {
             {/* <div className="flex items-end w-2/6 h-5">
                 {unselected && <p className="ml-20 w-3/4  pl-5 text-sm text-red-500 ">請選擇借用機台類型</p>}
             </div> */}
-
             
+            <div className="h-3"></div>
             <div className="m-3 mb-0.5 w-2/5 flex items-center gap-2">
                 <p className="font-bold w-1/4 text-right">檔案名稱：</p>
                 <InputArea
@@ -98,20 +97,19 @@ export default function reserve() {
                 {tooLong && <p className="ml-20 w-3/4 pl-5 text-sm text-red-500">檔案名稱不可超過15字</p>}
             </div>
 
-            <div className="m-3 mb-0.5 w-2/5 flex items-center gap-2">
-                <p className="font-bold flex-end w-1/4 text-right">使用材料：PLA</p>
+            <div className="m-3 mb-0.5 w-2/6 flex items-center gap-2">
+                <p className="font-bold flex-end w-1/7 text-right">使用材料：&nbsp; PLA &nbsp;&nbsp;&nbsp;</p>
+                <div className="flex items-center">
+                    <Checkbox style={{color: "yellow"}} onClick = {()=>setLoadBearing((prev) => (!prev))}></Checkbox>
+                    <p>需要支撐</p>
+                </div>
             </div>
-
-            <div className="flex items-end w-2/6 h-5" />
-            <div className="flex items-center">
-                <Checkbox style={{color: "yellow"}} onClick = {()=>setLoadBearing((prev) => (!prev))}></Checkbox>
-                <p>需要支撐</p>
-            </div>
-
+            
+            <div className="h-5"></div>
             <div className="m-3 mb-0.5 w-2/5 flex gap-2">
                 <p className="font-bold w-1/4 text-right">備註：</p>
                 <textarea
-                    className="resize-none p-1 border-2 w-full text-gray-800 border-black rounded-lg focus:border-gray-600 focus:outline-none"
+                    className="resize-none w-full p-2 border-2 bg-black text-white text-base border-blue-500 focus:border-blue-300 focus:border-4 focus:outline-none"
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                 />

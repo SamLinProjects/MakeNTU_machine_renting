@@ -12,8 +12,8 @@ export default function HeadBar() {
     return (
         <>
         <div className="h-5"></div>
-        <div className="h-12 m-2 flex items-center justify-center cursor-pointer" onClick={()=>router.push("/")}>
-            <h1 className="text-4xl font-bold text-blue-500">MakeNTU 機台租借網站</h1>
+        <div className="h-12 m-2 flex items-center justify-center cursor-pointer">
+            <h1 className="text-4xl font-bold text-blue-500" onClick={()=>router.push("/")}>MakeNTU 機台租借網站</h1>
             <div className="m-2 flex flex-row justify-end">
                 <div className="flex flex-row justify-between">
                     {user?.permission==='contestant' && <button
