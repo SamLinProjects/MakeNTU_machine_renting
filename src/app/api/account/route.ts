@@ -105,18 +105,25 @@ export async function POST(req: NextRequest) {
     }
 }
 
-// export async function GET(req:NextRequest){
-//     try{
-//         const dbresultReq = await prisma.account.findMany();
-//         return NextResponse.json({dbresultReq}, {status: 200});
-//     }catch(error){
-//         console.log("error: ", error);
-//         return NextResponse.json(
-//             { error: "Something went wrong" },
-//             { status: 500 },
-//         );
-//     }
-// }
+export async function GET(req:NextRequest){
+    try{
+        const user = await prisma.account.findMany({
+            select: {
+                id: true,
+                name: true,
+                password: true,
+                permission: true
+            }
+        });
+        return NextResponse.json({user}, {status: 200});
+    }catch(error){
+        console.log("error: ", error);
+        return NextResponse.json(
+            { error: "Something went wrong" },
+            { status: 500 },
+        );
+    }
+}
 
 export async function SignInApi(req: NextApiRequest, res: NextApiResponse) {
     const { username, password, permission } = req.body;

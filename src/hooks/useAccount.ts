@@ -47,12 +47,23 @@ export default function useAccount() {
       }
       router.refresh();
       return res.json();
-      
     }
     
+    const getAccountbyToken = async () => {
+      const res = await fetch("/api/account", {
+        method: "GET",
+      });
+      if (!res.ok) {
+        const body = await res.json();
+        throw new Error(body.error);
+      }
+      router.refresh();
+      return res.json();
+    }
 
     return {
       createAccount,
-      getAccount
+      getAccount,
+      getAccountbyToken
     };
 }
