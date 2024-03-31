@@ -58,7 +58,7 @@ export default function ThreeDPQueueList() {
             try{
                 const requestListInit = await getThreeDPRequest();
                 const requestListJson:indRequest[] = requestListInit["dbresultReq"];
-                console.log(requestListJson)
+                // console.log(requestListJson)
                 setRequestList(requestListJson);
             }
             catch(e){

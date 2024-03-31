@@ -1,7 +1,6 @@
 'use client'
-import test from "node:test";
-import { createContext, useEffect, useState } from "react";
-
+import { createContext, useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 export type Account = {
     id: number;
     name: string;
@@ -21,40 +20,91 @@ export type AccountResponse = {
 export type AccountContext = {
     user?: Account | null;
     setAccount?: (user: Account) => void;
-    test: string
 }
 
 export const AccountContext = createContext<AccountContext>({
     user: null,
     setAccount: () => {},
-    test: ""
 });
 
 type Props = {
     children: React.ReactNode;
 }
 export const AccountProvider = ({ children }: Props) => {
-    const [user, setAccount] = useState<Account | null>(null);
-    const [test, setTest] = useState("hello");
+    const router = useRouter();
+    const [user, setAccount] = useState<Account | undefined>();
+    const [userList, setUserList] = useState<Account[] | undefined>();
     useEffect(() => {
-        const fetchAccount = async() => {
-            try {
-                const res = await fetch("/api/account");
-                const data = await res.json();
-                if (data?.messages) {
-                  setAccount(data.messages);
-                  console.log(data.messages);
-                }
-            } catch (error) {
-                console.log(error);
+        const userHook = async () => {
+            const res = await fetch("/api/account", {
+                method: "GET",
+              });
+              if (!res.ok) {
+                const body = await res.json();
+                throw new Error(body.error);
+              }
+              router.refresh();
+              return res.json();
+        }
+        const getUser = async () => {
+            const UserListInit = await userHook();
+            const UserListJson:Account[] = UserListInit["user"]
+            setUserList(UserListJson)
+            console.log(UserListJson)
+        }
+        getUser();
+        const token = localStorage.getItem("jwt-token: ");
+        function decodeJWT(token: string): Record<string, any> | null {
+            const parts = token.split('.');
+            if (parts.length !== 3) {
+                return null; // Invalid JWT format
+            }
+            const payload = Buffer.from(parts[1], 'base64').toString('utf-8');
+            return JSON.parse(payload);
+        }
+        if (!token) {
+            // alert("You are not logged in.");
+            // router.push("/login");
+        } else {
+            const decodedPayload = decodeJWT(token);
+            const name = decodedPayload?.username;
+            if(!name) {
+                console.log("noname")
+            }
+            else{
+                const temp: Account|undefined = userList?.find( item => item.name === name) 
+                setAccount(temp)
             }
         }
-        fetchAccount();
-    }, [])
-
+    },[]);
+    // useEffect(() => {
+    //     const fetchAccount = async() => {
+    //         try {
+    //             const res = await fetch("/api/account");
+    //             const data = await res.json();
+    //             if (data?.messages) {
+    //               setAccount(data.messages);
+    //               console.log(data.messages);
+    //             }
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     }
+    //     fetchAccount();
+    // }, [])
+    
     return (
-        <AccountContext.Provider value={{ user, setAccount, test }}>
+        <AccountContext.Provider value={{ user, setAccount }}>
             {children}
         </AccountContext.Provider>
     )
 }
+
+export function useAccountContext() {
+    const context = useContext(AccountContext);
+    // uncomment this if you use the null default value
+    // if (!context) {
+    //   throw new Error("useCards must be used within a CardProvider");
+    // }
+    return context;
+  }

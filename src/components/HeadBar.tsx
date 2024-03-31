@@ -1,16 +1,67 @@
 'use client'
 import React, { useContext, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { AccountContext } from "@/context/Account";
-
-import useLaserCutRequest from "@/hooks/useLaserCutRequest";
-import useThreeDPRequest from "@/hooks/useThreeDPRequest";
+import { AccountContext, useAccountContext } from "@/context/Account";
+import { getLoggedInUser } from "@/lib/userData";
 import useAccount from "@/hooks/useAccount";
+
+export type Account = {
+    username: string;
+    permission: string;
+}
+
 export default function HeadBar() {
+    const { getAccountbyToken } = useAccount();
     const router = useRouter();
-    const { user } = useContext(AccountContext);
+    const [user, setUser] = useState<Account>();
+    const [userList, setUserList] = useState<Account[]>();
+
+    function decodeJWT(token: string): Record<string, any> | null {
+        const parts = token.split('.');
+        if (parts.length !== 3) {
+            return null; // Invalid JWT format
+        }
+        const payload = Buffer.from(parts[1], 'base64').toString('utf-8');
+        return JSON.parse(payload);
+    }
+
+    useEffect(() => {
+        const token = localStorage.getItem("jwt-token: ");
+        if (!token) {
+            // alert("You are not logged in.");
+            // router.push("/login");
+        } else {
+            const decodedPayload = decodeJWT(token);
+            const name = decodedPayload?.username;
+            const permission = decodedPayload?.permission;
+            if(!name) {
+                console.log("noname")
+            }
+            else{
+                setUser({username: name, permission: permission})
+            }
+        }
+            
+
+        // const getUser = async () => {
+        //     try{
+        //         const UserListInit = await getAccountbyToken();
+        //         const UserListJson:Account[] = UserListInit["user"]
+        //         setUserList(UserListJson)
+        //                     }catch(e){
+        //         console.log(e);
+        //     }
+            
+        // }
+        // getUser();
+        
+    },[])
+    
+    
     return (
         <>
+        
+        {/* <p>{user?.name}</p> */}
         <div className="h-5"></div>
         <div className="h-12 m-2 flex items-center justify-center cursor-pointer">
             <h1 className="text-4xl font-bold text-blue-500" onClick={()=>router.push("/")}>MakeNTU 機台租借網站</h1>
@@ -26,7 +77,7 @@ export default function HeadBar() {
                     >登入</button>}
                     {(user?.permission==='admin' || user?.permission==='contestant') && <button
                         className="m-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                        onClick={() => router.push("/")}
+                        onClick={() => {router.push("/");localStorage.clear();setUser({username:"", permission:""})}}
                     >登出</button>}
                 </div>
             </div>
