@@ -102,7 +102,7 @@ export default function reserve() {
             <div className="w-1/5 items-center text-center">
                 <div style = {{display : customized?"none":"block"}}>
                 <div>
-                    <p className="text-xl">選擇板材志願序</p>
+                    <p className="text-xl">拖拉下方方塊選擇板材志願序</p>
                 </div>
                 <div className="h-5"></div>
                 <DragDropContext 
@@ -163,10 +163,10 @@ export default function reserve() {
             </div>
 
             <div className="m-3 mb-0.5 w-2/6 flex gap-2">
-                <p className="font-bold w-1/4 text-right">備註：</p>
+                <p className="font-bold w-1/5 text-right">備註：</p>
                 <textarea
                     
-                    className="resize-none w-full p-1 border-2 text-gray-800 border-black rounded-lg focus:border-gray-600 focus:outline-none"
+                    className="resize-none w-full p-2 border-2 bg-black text-white text-base border-blue-500 focus:border-blue-300 focus:border-4 focus:outline-none"
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                 />

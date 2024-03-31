@@ -44,7 +44,7 @@ export default function Login() {
         try {
             const { user: user, token: token } = await createAccount({ username, password, permission });
             localStorage.setItem("jwt-token: ", token);
-             //幫我跳到登入頁面
+            router.push("/login");
         } catch(error) {
             alert("發生錯誤");
             console.log(error);
