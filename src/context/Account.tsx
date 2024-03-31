@@ -1,4 +1,5 @@
 'use client'
+import test from "node:test";
 import { createContext, useEffect, useState } from "react";
 
 export type Account = {
@@ -20,11 +21,13 @@ export type AccountResponse = {
 export type AccountContext = {
     user?: Account | null;
     setAccount?: (user: Account) => void;
+    test: string
 }
 
 export const AccountContext = createContext<AccountContext>({
     user: null,
     setAccount: () => {},
+    test: ""
 });
 
 type Props = {
@@ -32,7 +35,7 @@ type Props = {
 }
 export const AccountProvider = ({ children }: Props) => {
     const [user, setAccount] = useState<Account | null>(null);
-
+    const [test, setTest] = useState("hello");
     useEffect(() => {
         const fetchAccount = async() => {
             try {
@@ -50,7 +53,7 @@ export const AccountProvider = ({ children }: Props) => {
     }, [])
 
     return (
-        <AccountContext.Provider value={{ user, setAccount }}>
+        <AccountContext.Provider value={{ user, setAccount, test }}>
             {children}
         </AccountContext.Provider>
     )
