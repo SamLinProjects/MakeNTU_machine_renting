@@ -57,7 +57,7 @@ export default function ThreeDPQueueListForAdmin() {
             }
         }
         gReq();
-    },[]);
+    }, []);
     
     const handleMachineChange = async (id: number, newMachine: number) => {
         try{
@@ -69,42 +69,9 @@ export default function ThreeDPQueueListForAdmin() {
             console.error(e);
         }
     }
-
-    const handleStatusChange = async(id: number, newStatus: string) => {
-        try{
-            await putThreeDPRequestStatus({
-                id,
-                newStatus
-            })
-        }catch(e){
-            console.error(e);
-        }
-    }
     
     return (
         <>
-        {/* <div className="m-2 max-h-[90vh] w-1/2 flex flex-col items-center justify-start bg-white rounded border-2 border-black overflow-y-auto">
-            <div className="w-full sticky top-0 bg-white z-10">
-                <div className="g-4 w-full flex flex-row items-center justify-between border-b-2 border-black">
-                    <p className="ml-1 text-sm">檔案名稱</p>
-                    <p className="text-sm">列印類型</p>
-                    <p className="text-sm">列印備註</p>
-                    <p className="text-sm">有問題？</p>
-                </div>
-            </div>
-            <RequestCardForAdmin information={testRequest} />
-            {/* {requests.map((request) => {
-                if (request.status === "waiting") {
-                    return (
-                        <RequestCardForAdmin
-                            key={request.id}
-                            information={request}
-                        />
-                    )}
-                    return null;
-            })} 
-        </div> */}
-
         <div className="h-10 m-2 flex items-center justify-center cursor-pointer">
             <h1 className="text-3xl font-bold text-yellow-400">3DP使用申請</h1>
         </div>
@@ -136,14 +103,6 @@ export default function ThreeDPQueueListForAdmin() {
                     <TableBody>
                         {
                             requestList?.map((request)=>(
-                                // <RequestCard information={{
-                                //     group:String(request.groupname),
-                                //     filename:request.filename,
-                                //     material:request.material,
-                                //     status:request.status,
-                                //     comment:request.comment
-
-                                // }}></RequestCard>
                             <TableRow key={request.id}>
                                 <TableCell sx={{textAlign: 'center'}}>{String(request.groupname)}</TableCell>
                                 <TableCell sx={{textAlign: 'center'}}>{request.filename}</TableCell>

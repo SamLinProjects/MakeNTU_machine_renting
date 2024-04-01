@@ -8,7 +8,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { setFips } from "crypto";
-
+import io from "socket.io-client";
 
 type StatusProps = {
     id:number;
@@ -24,7 +24,12 @@ type indRequestForStatus = {
     status: string
 }
 
-export default function( {id, isAdmin, initialState, timeStarted, type}: StatusProps ){
+type broadcastRequest = {
+    id: number
+    status: string
+}
+
+export default function Status( {id, isAdmin, initialState, timeStarted, type}: StatusProps ){
     const router = useRouter();
     const [ timer, setTimer ] = useState<NodeJS.Timeout>();
     const statusArray = ['等','到','過','切','完'];
@@ -52,10 +57,10 @@ export default function( {id, isAdmin, initialState, timeStarted, type}: StatusP
             const requestListJson = requestListLaserJson.concat(requestListTDPJson)
             setRequestList(requestListJson);
             if (requestListJson.find(checkID) !== undefined) {
-                setTimeCreated(requestListJson.find(checkID)?.timeleft)
+                setTimeCreated(requestListJson.find(checkID)?.timeleft);
             }
             else{
-                setTimeCreated(new Date(0))
+                setTimeCreated(new Date(0));
             }   
         }
         catch(e){
@@ -102,12 +107,20 @@ export default function( {id, isAdmin, initialState, timeStarted, type}: StatusP
     },[timeLeft])
 
     const handleStatusChange = async(id: number, newStatus: string) => {
+
+        const socket = io();
+
         if (type === "laser"){
             try{
                 await putLaserCutRequestStatus({
                     id,
                     newStatus
                 })
+                const broadcastChange: broadcastRequest = {
+                    id: id,
+                    status: newStatus
+                }
+                socket.emit('laserCutQueue', broadcastChange);
             }catch(e){
                 console.error(e);
             }
@@ -118,11 +131,20 @@ export default function( {id, isAdmin, initialState, timeStarted, type}: StatusP
                     id,
                     newStatus
                 })
+                const broadcastChange: broadcastRequest = {
+                    id: id,
+                    status: newStatus
+                }
+                socket.emit('threeDPQueue', broadcastChange);
             }catch(e){
                 console.error(e);
             }
         }
         router.refresh();
+
+        return () => {
+            socket.disconnect();
+        }
     }
 
     const handleTimeChange = async(id: number, newTimeLeft: Date) => {
@@ -178,53 +200,10 @@ export default function( {id, isAdmin, initialState, timeStarted, type}: StatusP
                             <MenuItem value="過">過</MenuItem>
                         </Select>
                 </FormControl>
-
-                {/* <div className="inline-flex flex-row">
-                    {statusArray.map(
-                        (status)=>(statusArray.indexOf(status) === current ? 
-                        <div className="w-min text-red-400">{status}</div> : <div className="w-min">{status}</div>)
-                    )}
-                </div>
-                <br/> */}
-                
-                {/* <button onClick={ ()=>{
-                    if (current !== 0){
-                        setCurrent((prev)=>(prev-1));
-                        handleStatusChange(id,statusArray[current-1] )
-                    }
-                    if (current === 2){
-                        setCountdown(true)
-                        handleTimeChange(id, new Date())
-                    }
-                    else{
-                        setCountdown(false)
-                    }
-                }}>左</button>
-
-                <button onClick={ ()=>{
-                    if (current !== 3){
-                        setCurrent((prev)=>(prev+1));
-                        handleStatusChange(id, statusArray[current+1] )
-                    }
-                    if (current === 0){
-                        setCountdown(true)
-                        handleTimeChange(id, new Date())
-                    }
-                    else{
-                        setCountdown(false)
-                    }
-                } }>右</button> */}
-
-                {/* <p className={countdown? "block" : "hidden"}>{String(Math.trunc(timeLeft/60))+":"+String(timeLeft%60)}</p> */}
                 <p className={countdown? "block" : "hidden"}>{timeLeft}</p>
-                {/* <p className={wrong ? "text-red-600" : "text-slate-400" } onClick={()=>{setWrong(false);handleStatusChange(id, "切" );setCurrent(2)}}>過</p> */}
             </> :
             <>
                 <div className="inline-flex flex-row">
-                    {/* {statusArray.map(
-                    (status)=>(statusArray.indexOf(status) === current ? 
-                    <div className="w-min text-red-400">{status}</div> : <div className="w-min">{status}</div>)
-                    )} */}
                     {current}
                 </div>
                 <p className={countdown? "block" : "hidden"}>{timeLeft}</p>
