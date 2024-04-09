@@ -16,6 +16,7 @@ import { FormControl, TableHead, TableRow } from "@mui/material";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import io from "socket.io-client";
 
 type indRequestForAdmin = {
     id: number
@@ -27,6 +28,11 @@ type indRequestForAdmin = {
     status: string
     comment: string
     timeleft: Date
+}
+
+type broadcastRequest = {
+    id: number
+    finalMaterial: string
 }
 
 export default function LaserCutQueueListForAdmin() {
@@ -53,11 +59,19 @@ export default function LaserCutQueueListForAdmin() {
     },[]);
     
     const handleMaterialChange = async (id: number, newFinalMaterial: string) => {
+
+        const socket = io();
+
         try{
             await putLaserCutRequestMaterial({
                 id,
                 newFinalMaterial
-            })
+            });
+            const broadcastChange: broadcastRequest = {
+                id: id,
+                finalMaterial: newFinalMaterial
+            }; 
+            socket.emit('laserCutMaterial', broadcastChange);
         }catch(e){
             console.error(e);
         }
@@ -76,27 +90,6 @@ export default function LaserCutQueueListForAdmin() {
     
     return (
         <>
-        {/* <div className="m-2 max-h-[90vh] w-1/2 flex flex-col items-center justify-start bg-white rounded border-2 border-black overflow-y-auto">
-            <div className="w-full sticky top-0 bg-white z-10">
-                <div className="g-4 w-full flex flex-row items-center justify-between border-b-2 border-black">
-                    <p className="ml-1 text-sm">檔案名稱</p>
-                    <p className="text-sm">列印類型</p>
-                    <p className="text-sm">列印備註</p>
-                    <p className="text-sm">有問題？</p>
-                </div>
-            </div>
-            <RequestCardForAdmin information={testRequest} />
-            {/* {requests.map((request) => {
-                if (request.status === "waiting") {
-                    return (
-                        <RequestCardForAdmin
-                            key={request.id}
-                            information={request}
-                        />
-                    )}
-                    return null;
-            })} 
-        </div> */}
         <div className="h-10 m-2 flex items-center justify-center cursor-pointer">
             <h1 className="text-3xl font-bold text-yellow-400">雷切使用申請</h1>
         </div>
@@ -149,7 +142,7 @@ export default function LaserCutQueueListForAdmin() {
 
                                     <TableCell sx={{whiteSpace:"pre", textAlign: 'center'}}>
                                         {request.material.map((mat)=>
-                                            (<p className={request.material.indexOf(mat)===0?"text-red-400":""} id={mat}>
+                                            (<p className={request.material.indexOf(mat)===0?"text-red-400":""} id={mat} key={mat}>
                                                 {(request.material.indexOf(mat)+1)+'. '+mat}
                                             </p>))}
                                     </TableCell>
@@ -162,7 +155,7 @@ export default function LaserCutQueueListForAdmin() {
                                                     label="板材種類"
                                                     onChange={(e)=>{handleMaterialChange(request.id,e.target.value as string);}}
                                                     >   
-                                                    {request.material.map((eachMaterial)=>(<MenuItem value={eachMaterial}>{eachMaterial}</MenuItem>))}
+                                                    {request.material.map((eachMaterial)=>(<MenuItem value={eachMaterial} key={eachMaterial}>{eachMaterial}</MenuItem>))}
                                                 </Select>
                                         </FormControl>
                                     </TableCell>

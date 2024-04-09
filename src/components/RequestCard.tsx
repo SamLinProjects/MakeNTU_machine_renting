@@ -3,6 +3,7 @@ import { Tab, TableCell } from "@mui/material";
 import Table from '@mui/material/Table';
 import TableRow from "@mui/material";
 import TableBody from '@mui/material/TableBody';
+
 export type RequestCardProps = {
     information: {
         id: number;
@@ -17,17 +18,7 @@ export type RequestCardProps = {
 
 export default function RequestCard({ information, isSender }: RequestCardProps) {
     const materialList = ["3mm密集板","5mm密集板","3mm壓克力","5mm壓克力"]
-            {/* <div
-            className={`g-4 w-full h-12 flex items-center justify-between border-black border-b-2 ${
-                isSender ? "bg-yellow-200" : ""
-            }`}
-        >
-            <p className="text-lg font-bold">{information?.group}</p>
-            <p className="text-lg font-bold">{information?.filename}</p>
-            <p className="text-lg font-bold">{materialList[information?.material[1]]}</p>
-            <p className="text-lg font-bold">{information?.status}</p>
-            <p className="text-lg font-bold">{information?.comment}</p>
-        </div> */}
+
     return (
         <>
             <Table>

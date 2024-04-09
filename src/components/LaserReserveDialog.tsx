@@ -50,7 +50,7 @@ export default function LaserReserveDialog({
                     <p className="text-lg font-bold">組別：{group}</p>
                     <p className="text-lg font-bold">
                         板材志願序：
-                        {material.map(( mat )=>( <p>{(material.indexOf(mat)+1)+". "+mat}</p> )) }
+                        {material.map(( mat )=>( <p key={mat}>{(material.indexOf(mat)+1)+". "+mat}</p> )) }
                     </p>
                     <p className="text-lg font-bold">檔名：{filename}</p>
                     <p className="text-lg font-bold">備註：{comment}</p>
