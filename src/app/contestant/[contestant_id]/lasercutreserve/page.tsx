@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import InputArea from "@/components/ui/InputArea";
 import { Checkbox } from "@mui/material";
 import { useRouter, usePathname } from "next/navigation";
@@ -9,11 +9,12 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import useLaserCutRequest from "@/hooks/useLaserCutRequest";
 import LaserReserveDialog from "@/components/LaserReserveDialog";
 
-export default function reserve() {
+export default function useReserve() {
     const { user } = useContext(AccountContext);
     const { sendRequest } = useContext(RequestContext);
     const router = useRouter();
     const pathname = usePathname();
+    const secretkey : string = process.env.PASSWORD_SECRET ? process.env.PASSWORD_SECRET : "Secret";
     const [filename, setFilename] = useState("");
     const [comment, setComment] = useState("");
     const [falseTitle, setFalseTitle] = useState(false);
@@ -30,6 +31,31 @@ export default function reserve() {
     //     }
     //     router.push('/');
     // }
+    function decodeJWT(token: string): Record<string, any> | null {
+        const parts = token.split('.');
+        if (parts.length !== 3) {
+            return null; // Invalid JWT format
+        }
+        const payload = Buffer.from(parts[1], 'base64').toString('utf-8');
+        return JSON.parse(payload);
+    }
+    useEffect(() => {
+        const token = localStorage.getItem("jwt-token: ");
+        if (!token) {
+            alert("You are not logged in.");
+            router.push("/login");
+        } else {
+            const decodedPayload = decodeJWT(token);
+            const permission = decodedPayload?.permission;
+            const username = decodedPayload?.username;
+            const currPath = pathname.split('/').slice(-2)[0];
+            if(!permission || permission !== "contestant" || !username || username !== currPath) {
+                router.push("/login");
+                alert("權限錯誤，請重新登入");
+            }
+        }
+    })
+
     const pathTemp = pathname.split("/");
     const switchCase = function(){
         if (customized===false){
@@ -135,6 +161,11 @@ export default function reserve() {
                                 </Draggable>
                                 )
                             )}
+
+                            {provided.placeholder}
+                            <div style={{
+                                position: "absolute",
+                            }}/>
                         </div>
                         )}
                     </Droppable>

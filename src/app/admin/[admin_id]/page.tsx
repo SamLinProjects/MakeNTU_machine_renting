@@ -1,18 +1,42 @@
 'use client'
 import React from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import LaserCutQueueListForAdmin from "@/components/LaserCutQueueListForAdmin";
 import ThreeDPQueueListForAdmin from "@/components/ThreeDPQueueListForAdmin";
 import LaserCutMachineList from "@/components/LaserCutMachineList";
 import ThreeDPMachineList from "@/components/ThreeDPMachineList";
 import Map from "@/components/Map";
-import useAdmin from "@/hooks/useAdmin";
 
-export default function admin() {
+export default function useAdmin() {
     const router = useRouter();
+    const pathname = usePathname();
+    const secretkey : string = process.env.PASSWORD_SECRET ? process.env.PASSWORD_SECRET : "Secret";
+    // const token = localStorage.getItem("jwt-token: ");
 
-    // const handleSave = () => {
-    // }
+    /*
+    function decodeJWT(token: string): Record<string, any> | null {
+        const parts = token.split('.');
+        if (parts.length !== 3) {
+            return null; // Invalid JWT format
+        }
+        const payload = Buffer.from(parts[1], 'base64').toString('utf-8');
+        return JSON.parse(payload);
+    }
+    if (!token) {
+        alert("You are not logged in.");
+        router.push("/login");
+    } else {
+        const decodedPayload = decodeJWT(token);
+        const permission = decodedPayload?.permission;
+        const username = decodedPayload?.username;
+        const currPath = pathname.split('/').slice(-1)[0];
+        console.log(currPath);
+        if(!permission || permission !== "admin" || !username || username !== currPath) {
+            router.push("/login");
+            alert("權限錯誤，請重新登入");
+        }
+    }
+    */
 
     return (
         <>

@@ -62,7 +62,7 @@ export default function Login() {
             localStorage.setItem("jwt-token: ", token);
             router.push(`/contestant/${username}`)
         } catch(error) {
-            alert("發生錯誤");
+            alert("登入失敗");
             console.log(error);
             return;
         }

@@ -117,7 +117,7 @@ export default function ThreeDPQueueListForContestant() {
                                 <TableCell sx={{textAlign: 'center'}}>{request.filename}</TableCell>
                                 <TableCell sx={{textAlign: 'center'}}>{request.loadBearing? "是" : "否"}</TableCell>
                                 <TableCell sx={{textAlign: 'center'}}>{request.material}</TableCell>
-                                <TableCell sx={{textAlign: 'center'}}>{request.status}</TableCell>
+                                <Status id={request.id} isAdmin={false} initialState={request.status} timeStarted={request.timeleft} type="3dp"></Status>
                                 <TableCell sx={{textAlign: 'center'}}>{request.comment}</TableCell>
                             </TableRow>
                                 )
