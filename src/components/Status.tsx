@@ -77,7 +77,7 @@ export default function Status( {id, isAdmin, initialState, timeStarted, type}: 
             setCountdown(true)
             setTimeLeft(Math.trunc(20-(new Date().getTime()-new Date(timeStarted).getTime())/1000))
         }
-    },[])
+    },[initialState])
     
     useEffect(() => {
         if ( flag === true ){
@@ -96,6 +96,7 @@ export default function Status( {id, isAdmin, initialState, timeStarted, type}: 
 
     useEffect(()=>{
         if( flag === true ){
+            console.log(timeLeft);
             if(timeLeft <= 0){
                 clearInterval(timer);
                 setCountdown(false);

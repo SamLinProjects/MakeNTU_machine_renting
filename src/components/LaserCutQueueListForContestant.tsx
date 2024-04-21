@@ -140,7 +140,7 @@ export default function LaserCutQueueListForContestant() {
                                             </p>))}
                                     </TableCell>
                                     <TableCell sx={{textAlign: 'center'}}>{request.finalMaterial}</TableCell>
-                                    <TableCell sx={{textAlign: 'center'}}>{request.status}</TableCell>
+                                    <Status id={request.id} isAdmin={false} initialState={request.status} timeStarted={request.timeleft} type="3dp"></Status>
                                     <TableCell sx={{textAlign: 'center'}}>{request.comment}</TableCell>
                                 </TableRow>
                                 )
