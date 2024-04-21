@@ -4,6 +4,7 @@ import { useRouter, usePathname } from "next/navigation";
 import LaserCutQueueListForContestant from "@/components/LaserCutQueueListForContestant";
 import ThreeDPQueueListForContestant from "@/components/ThreeDPQueueListForContestant"
 import Map from "@/components/Map";
+import { env } from "../../../utils/env";
 
 export default function useContestant() {
     const router = useRouter();

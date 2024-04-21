@@ -36,6 +36,7 @@ export default function Login() {
         try {
             const { user: user, token: token } = await createAccount({ username, password, permission });
             localStorage.setItem("jwt-token: ", token);
+            router.refresh();
             router.push("/login");
         } catch(error) {
             alert("發生錯誤");
