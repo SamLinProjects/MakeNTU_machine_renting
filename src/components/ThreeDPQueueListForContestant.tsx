@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { RequestContext } from "@/context/Request";
 import { AccountContext } from "@/context/Account";
-import Status from "./Status";
+import StatusForContestant from "./StatusForContestant"; 
 import useRequest from "@/hooks/useThreeDPRequest";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -29,6 +29,7 @@ type indRequest = {
 type broadcastRequest = {
     id: number
     status: string
+    timeCreated: Date
 }
 
 export default function ThreeDPQueueListForContestant() {      
@@ -63,7 +64,7 @@ export default function ThreeDPQueueListForContestant() {
             if (requestList) {
                 const updatedRequestList = requestList.map((request) => {
                     if (request.id === threeDPQueue.id) {
-                        return { ...request, status: threeDPQueue.status };
+                        return { ...request, status: threeDPQueue.status, timeleft: threeDPQueue.timeCreated };
                     }
                     return request;
                 });
@@ -117,7 +118,9 @@ export default function ThreeDPQueueListForContestant() {
                                 <TableCell sx={{textAlign: 'center'}}>{request.filename}</TableCell>
                                 <TableCell sx={{textAlign: 'center'}}>{request.loadBearing? "是" : "否"}</TableCell>
                                 <TableCell sx={{textAlign: 'center'}}>{request.material}</TableCell>
-                                <Status id={request.id} isAdmin={false} initialState={request.status} timeStarted={request.timeleft} type="3dp"></Status>
+                                <TableCell sx={{textAlign: 'center'}}>
+                                    <StatusForContestant id={request.id} initialState={request.status} timeStarted={request.timeleft} type="3dp"></StatusForContestant>
+                                </TableCell>
                                 <TableCell sx={{textAlign: 'center'}}>{request.comment}</TableCell>
                             </TableRow>
                                 )

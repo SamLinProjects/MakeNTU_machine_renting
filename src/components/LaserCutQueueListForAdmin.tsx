@@ -5,8 +5,7 @@ import { RequestContext } from "@/context/Request";
 import { AccountContext } from "@/context/Account";
 import CommentDialog from "./CommentDialog";
 import useLaserCutRequest from "@/hooks/useLaserCutRequest";
-import Status from "@/components/Status"
-
+import StatusForAdmin from "@/components/StatusForAdmin";
 import TableContainer from '@mui/material/TableContainer';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -151,7 +150,7 @@ export default function LaserCutQueueListForAdmin() {
                                         <FormControl fullWidth>
                                             <InputLabel id="demo-simple-select-label">板材種類</InputLabel>
                                                 <Select
-                                                    defaultValue={request.finalMaterial}
+                                                    defaultValue={request.material[0]}
                                                     label="板材種類"
                                                     onChange={(e)=>{handleMaterialChange(request.id,e.target.value as string);}}
                                                     >   
@@ -161,7 +160,7 @@ export default function LaserCutQueueListForAdmin() {
                                     </TableCell>
 
                                     <TableCell sx={{textAlign: 'center'}}>
-                                        <Status id={request.id} isAdmin={true} initialState={request.status} timeStarted={request.timeleft} type="laser"></Status>
+                                        <StatusForAdmin id={request.id} initialState={request.status} timeStarted={request.timeleft} type="laser"></StatusForAdmin>
                                     </TableCell>
 
                                     <TableCell sx={{textAlign: 'center'}}>

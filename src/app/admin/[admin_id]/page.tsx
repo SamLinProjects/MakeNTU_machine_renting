@@ -1,5 +1,6 @@
 'use client'
 import React from "react";
+import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import LaserCutQueueListForAdmin from "@/components/LaserCutQueueListForAdmin";
 import ThreeDPQueueListForAdmin from "@/components/ThreeDPQueueListForAdmin";
@@ -11,6 +12,7 @@ export default function useAdmin() {
     const router = useRouter();
     const pathname = usePathname();
     const secretkey : string = process.env.PASSWORD_SECRET ? process.env.PASSWORD_SECRET : "Secret";
+
     // const token = localStorage.getItem("jwt-token: ");
 
     /*
@@ -38,10 +40,19 @@ export default function useAdmin() {
     }
     */
 
+    const handleRefresh = () => {
+        window.location.reload();
+    }
+   
     return (
         <>
             <Map />
-            
+            <div className="flex items-center justify-center">
+                <button 
+                    className="m-4 bg-yellow-500 hover:bg-yellow-300 text-black font-bold py-2 px-4 rounded"
+                    onClick={() => handleRefresh()}>Refresh
+                </button>
+            </div>
             <LaserCutQueueListForAdmin/>
             <div className="h-7"></div>
             <div className="flex w-full justify-center content-start">

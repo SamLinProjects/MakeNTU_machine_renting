@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { RequestContext } from "@/context/Request";
 import { AccountContext } from "@/context/Account";
-import Status from "./Status";
+import StatusForContestant from "./StatusForContestant";
 import useRequest from "@/hooks/useLaserCutRequest";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -29,6 +29,7 @@ type indRequest = {
 type broadcastStatusRequest = {
     id: number
     status: string
+    timeCreated: Date
 }
 
 type broadcastMaterialRequest = {
@@ -68,7 +69,7 @@ export default function LaserCutQueueListForContestant() {
             if (requestList) {
                 const updatedRequestList = requestList.map((request) => {
                     if (request.id === laserCutQueue.id) {
-                        return { ...request, status: laserCutQueue.status };
+                        return { ...request, status: laserCutQueue.status, timeleft: laserCutQueue.timeCreated };
                     }
                     return request;
                 });
@@ -139,8 +140,10 @@ export default function LaserCutQueueListForContestant() {
                                                 {(request.material.indexOf(mat)+1)+'. '+mat}
                                             </p>))}
                                     </TableCell>
-                                    <TableCell sx={{textAlign: 'center'}}>{request.finalMaterial}</TableCell>
-                                    <Status id={request.id} isAdmin={false} initialState={request.status} timeStarted={request.timeleft} type="3dp"></Status>
+                                    <TableCell sx={{textAlign: 'center', color: '#f97316', fontWeight: 'bold'}}>{request.finalMaterial}</TableCell>
+                                    <TableCell sx={{textAlign: 'center'}}>
+                                        <StatusForContestant id={request.id} initialState={request.status} timeStarted={request.timeleft} type="laser"></StatusForContestant>
+                                    </TableCell>
                                     <TableCell sx={{textAlign: 'center'}}>{request.comment}</TableCell>
                                 </TableRow>
                                 )

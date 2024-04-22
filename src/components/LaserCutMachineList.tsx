@@ -56,19 +56,6 @@ export default function LaserCutMachineList({ index }: MachineListProps) {
         gReq();
     }, []);
 
-    const handleStatusChange =  async(id: number, newStatus: string) => {
-        try{
-            await putLaserCutRequestStatus({
-                id,
-                newStatus
-            })
-            console.log("successful test3")
-        }catch(e){
-            console.error(e);
-        }
-        router.refresh();
-    }
-
     return (
         <>
         <div className="flex-col w-full content-start">
@@ -96,7 +83,9 @@ export default function LaserCutMachineList({ index }: MachineListProps) {
                     <TableBody>
                         {
                             requestList?.map( (request)=>(
-                            ( request.machine === index && request.status === "切")?
+                            ( request.machine === index && request.status === '製作中' && 
+                            (request.finalMaterial === "3mm密集板" || request.finalMaterial === "5mm密集板" ||
+                            request.finalMaterial === "3mm壓克力" || request.finalMaterial === "5mm壓克力"))?
                             <TableRow key={request.id}>
                                 <TableCell sx={{textAlign: 'center'}}>{String(request.groupname)}</TableCell>
                                 <TableCell sx={{textAlign: 'center'}}>{request.filename}</TableCell>

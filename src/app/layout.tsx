@@ -2,9 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import HeadBar from '../components/HeadBar'
-import Providers from './providers'
 import { AccountProvider } from '@/context/Account'
-import { useContext } from 'react'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
