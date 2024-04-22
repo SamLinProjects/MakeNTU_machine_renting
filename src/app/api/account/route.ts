@@ -16,27 +16,11 @@ export async function isAccountUnique(req: NextApiRequest, res: NextApiResponse)
     else return res.status(200).json({success: "Unique account"});
 }
 
-// export async function SignUpApi(req: NextApiRequest, res: NextApiResponse) {
-//     const { username, password, permission } = req.body;
-//     console.log(req.body);
-//     const hashedPassword = await bcrypt.hash(password, secretkey);
-//     const result = await prisma.account.create({
-//         data: {
-//             name: username,
-//             password: hashedPassword,
-//             permission,
-//         }
-//     })
-//     const token = jwt.sign({usetId: result.name}, secretkey, {expiresIn: env.JWT_EXPIRES_IN});
-//     return res.json(token);
-// }
-
 export async function POST(req: NextRequest) {
     
     const data = await req.json();
-    console.log({data})
+    // console.log({data})
     const { username, password, permission, login } = data;
-    // const hashedPassword = await bcrypt.hash(password, 165165);
     if (!login) {
         try {
             const existed = await prisma.account.findUnique({
@@ -60,8 +44,6 @@ export async function POST(req: NextRequest) {
                     { status: 400 },
                 );
             }
-            // const token = jwt.sign({usetId: user.name}, secretkey, {expiresIn: env.JWT_EXPIRES_IN});
-            // return NextResponse.json(token);
         } catch (error) {
             console.log("error: ", error);
             return NextResponse.json(
@@ -100,7 +82,7 @@ export async function POST(req: NextRequest) {
             );
         }
     } else {
-        console.log("idek how this could happen")
+        console.log("idk how this could happen")
         return;
     }
 }

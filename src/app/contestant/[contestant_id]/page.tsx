@@ -4,9 +4,6 @@ import { useRouter, usePathname } from "next/navigation";
 import LaserCutQueueListForContestant from "@/components/LaserCutQueueListForContestant";
 import ThreeDPQueueListForContestant from "@/components/ThreeDPQueueListForContestant"
 import Map from "@/components/Map";
-import jwt from "jsonwebtoken";
-import { env } from "../../../utils/env";
-import { decode } from "punycode";
 
 export default function useContestant() {
     const router = useRouter();
@@ -31,7 +28,6 @@ export default function useContestant() {
             const permission = decodedPayload?.permission;
             const username = decodedPayload?.username;
             const currPath = pathname.split('/').slice(-1)[0];
-            console.log(currPath);
             if(!permission || permission !== "contestant" || !username || username !== currPath) {
                 router.push("/login");
                 alert("權限錯誤，請重新登入");

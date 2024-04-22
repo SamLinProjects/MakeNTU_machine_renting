@@ -6,8 +6,7 @@ import { AccountContext } from "@/context/Account";
 import RequestCardForAdmin from "./RequestCardForAdmin";
 import CommentDialog from "./CommentDialog";
 import useThreeDPRequest from "@/hooks/useThreeDPRequest";
-import Status from "@/components/Status"
-
+import StatusForAdmin from "@/components/StatusForAdmin";
 import TableContainer from '@mui/material/TableContainer';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -129,7 +128,7 @@ export default function ThreeDPQueueListForAdmin() {
                                 <TableCell sx={{textAlign: 'center'}}>{request.material}</TableCell>
 
                                 <TableCell sx={{textAlign: 'center'}}>
-                                    <Status id={request.id} isAdmin={true} initialState={request.status} timeStarted={request.timeleft} type="3dp"></Status>
+                                    <StatusForAdmin id={request.id} initialState={request.status} timeStarted={request.timeleft} type="3dp"></StatusForAdmin>
                                 </TableCell>
 
                                 <TableCell sx={{textAlign: 'center'}}>

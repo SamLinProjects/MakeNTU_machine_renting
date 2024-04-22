@@ -24,13 +24,7 @@ export default function useReserve() {
     const [materialBackUp, setMaterialBackUp] = useState(["3mm密集板","5mm密集板","3mm壓克力","5mm壓克力"]);
     const [customized, setCustomized] = useState(false);
     const [open, setOpen] = useState(false);
-    // if(user?.permission!=='admin' && user?.permission!=='contestant'){
-    //     if(!tooLong) {
-    //         alert("Please login first!");
-    //         setTooLong(true);
-    //     }
-    //     router.push('/');
-    // }
+
     function decodeJWT(token: string): Record<string, any> | null {
         const parts = token.split('.');
         if (parts.length !== 3) {
@@ -109,22 +103,8 @@ export default function useReserve() {
                     />
             </div>
             <div className="flex items-end w-2/6 h-5" />
-            <div className="m-3 mb-0.5 w-2/6 flex items-center gap-2">
-                {/* <p className="font-bold flex-end w-1/4 text-right">機台類型：</p>
-                <select 
-                    className="p-1 h-8 border-black border-2 text-gray-800 rounded-lg bg-white focus:outline-none"
-                    value={type}
-                    onChange={(e)=>setType(e.target.value)}
-                    defaultValue="">
-                    <option value="">--Select--</option>
-                    <option value="3DP">3D列印機</option>
-                    <option value="LCM">雷射切割機</option>
-                </select> */}
-            </div>
+            <div className="m-3 mb-0.5 w-2/6 flex items-center gap-2"></div>
             
-            {/* <div className="flex items-end w-2/6 h-5">
-                {unselected && <p className="ml-20 w-3/4  pl-5 text-sm text-red-500 ">請選擇借用機台類型</p>}
-            </div> */}
             <div className="w-1/5 items-center text-center">
                 <div style = {{display : customized?"none":"block"}}>
                 <div>

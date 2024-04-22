@@ -6,9 +6,11 @@ import ThreeDPQueueList from "@/components/ThreeDPQueueList"
 export default function Home() {
   return (
     <>
-      <Map/>
-      <LaserCutQueueList/>
-      <ThreeDPQueueList/>
+      <div className='bg-black'>
+        <Map/>
+        <LaserCutQueueList/>
+        <ThreeDPQueueList/>
+      </div>
     </>
   )
 }

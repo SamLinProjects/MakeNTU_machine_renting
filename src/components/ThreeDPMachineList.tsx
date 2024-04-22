@@ -56,18 +56,6 @@ export default function ThreeDPMachineList({ index }: MachineListProps) {
         gReq();
     },[]);
 
-    const handleStatusChange =  async(id: number, newStatus: string) => {
-        try{
-            await putThreeDPRequestStatus({
-                id,
-                newStatus
-            })
-        }catch(e){
-            console.error(e);
-        }
-        router.refresh();
-    }
-
     return (
         <>
         <div className="flex-col w-full content-start">
@@ -95,7 +83,7 @@ export default function ThreeDPMachineList({ index }: MachineListProps) {
                     <TableBody>
                         {
                             requestList?.map( (request)=>(
-                               ( request.machine === index && request.status === "切")?
+                               ( request.machine === index && request.status === '製作中')?
                             <TableRow key={request.id}>
                                 <TableCell sx={{textAlign: 'center'}}>{String(request.groupname)}</TableCell>
                                 <TableCell sx={{textAlign: 'center'}}>{request.filename}</TableCell>

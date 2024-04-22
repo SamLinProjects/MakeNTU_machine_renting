@@ -18,13 +18,6 @@ export default function Login() {
     const [isSignUp, setIsSignUp] = useState(false);
     const { createAccount, getAccount } = useAccount();
 
-    // useEffect(() => {
-    //     console.log("useEffect: ", username, password, permission)
-    //     if (permission !== "") {
-    //         direct();
-    //     }
-    // }, [permission])
-
     useEffect(() => {
         if (username.startsWith("admin")) {
             setPermission("admin");
@@ -40,7 +33,6 @@ export default function Login() {
         if (!validInput){
             return;
         } 
-        console.log(username,password,permission)
         try {
             const { user: user, token: token } = await createAccount({ username, password, permission });
             localStorage.setItem("jwt-token: ", token);
@@ -53,7 +45,6 @@ export default function Login() {
     }
 
     const handleLogin = async () => {
-        console.log(username, password);
         if (!checkInput()) {
             return;
         }
@@ -85,7 +76,6 @@ export default function Login() {
             alert("帳號格式錯誤");
             return false;
         } else {
-            console.log("checkInput: ", username, password, comfirmPassword, permission)
             return true;
         }
     }

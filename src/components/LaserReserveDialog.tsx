@@ -46,16 +46,18 @@ export default function LaserReserveDialog({
             <Dialog open={open} onClose={onClose}>
                 <DialogTitle>以下是您即將預約的雷切內容</DialogTitle>
                 <Separator />
-                <DialogContent className="w-96 h-96">
-                    <p className="text-lg font-bold">組別：{group}</p>
-                    <p className="text-lg font-bold">
+                <DialogContent className="w-96 h-72">
+                    <p className="text-base font-bold">組別：{group}</p>
+                    <p className="text-base font-bold">
                         板材志願序：
                         {material.map(( mat )=>( <p key={mat}>{(material.indexOf(mat)+1)+". "+mat}</p> )) }
                     </p>
-                    <p className="text-lg font-bold">檔名：{filename}</p>
-                    <p className="text-lg font-bold">備註：{comment}</p>
+                    <p className="text-base font-bold">檔名：{filename}</p>
+                    <p className="text-base font-bold">備註：{comment}</p>
+                    <br />
                     <Separator />
-                    <p className="text-lg font-bold">確認無誤後，請按下確認，並預祝比賽順利!</p>
+                    <br />
+                    <p className="text-base font-bold">確認無誤後，請按下確定，並預祝比賽順利!</p>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={onClose}>取消</Button>

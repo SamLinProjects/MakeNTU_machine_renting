@@ -4,10 +4,7 @@ import InputArea from "@/components/ui/InputArea";
 import { useRouter, usePathname } from "next/navigation";
 import { AccountContext } from "@/context/Account";
 import { RequestContext } from "@/context/Request";
-import useLaserCutRequest from "@/hooks/useLaserCutRequest";
 import { Checkbox } from "@mui/material";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import useThreeDPRequest from "@/hooks/useThreeDPRequest";
 import ThreeDPReserveDialog from "@/components/ThreeDPReserveDialog";
 
 export default function useReserve() {
@@ -91,23 +88,7 @@ export default function useReserve() {
                     value={pathTemp[2]}
                     />
             </div>
-
-            <div className="m-3 mb-0.5 w-2/5 flex items-center gap-2">
-                {/* <p className="font-bold flex-end w-1/4 text-right">機台類型：</p>
-                <select 
-                    className="p-1 h-8 border-black border-2 text-gray-800 rounded-lg bg-white focus:outline-none"
-                    value={type}
-                    onChange={(e)=>setType(e.target.value)}
-                    defaultValue="">
-                    <option value="">--Select--</option>
-                    <option value="3DP">3D列印機</option>
-                    <option value="LCM">雷射切割機</option>
-                </select> */}
-            </div>
-            
-            {/* <div className="flex items-end w-2/6 h-5">
-                {unselected && <p className="ml-20 w-3/4  pl-5 text-sm text-red-500 ">請選擇借用機台類型</p>}
-            </div> */}
+            <div className="m-3 mb-0.5 w-2/5 flex items-center gap-2"></div>  
             
             <div className="h-3"></div>
             <div className="m-3 mb-0.5 w-2/5 flex items-center gap-2">

@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { RequestContext } from "@/context/Request";
 import { AccountContext } from "@/context/Account";
-import Status from "./Status";
+import StatusForContestant from "./StatusForContestant";
 import useRequest from "@/hooks/useLaserCutRequest";
 import { usePathname } from "next/navigation";
 
@@ -28,6 +28,7 @@ type indRequest = {
 type broadcastStatusRequest = {
     id: number
     status: string
+    timeCreated: Date
 }
 
 type broadcastMaterialRequest = {
@@ -66,7 +67,7 @@ export default function LaserCutQueueList() {
             if (requestList) {
                 const updatedRequestList = requestList.map((request) => {
                     if (request.id === laserCutQueue.id) {
-                        return { ...request, status: laserCutQueue.status };
+                        return { ...request, status: laserCutQueue.status, timeleft: laserCutQueue.timeCreated };
                     }
                     return request;
                 });
@@ -143,9 +144,16 @@ export default function LaserCutQueueList() {
                             <TableRow className={String(request.groupname)===group ? "bg-gray-300" : "" } key={request.id}>
                                 <TableCell sx={{textAlign: 'center'}}>{String(request.groupname)}</TableCell>
                                 <TableCell sx={{textAlign: 'center'}}>{request.filename}</TableCell>
-                                <TableCell sx={{textAlign: 'center'}}>{request.material}</TableCell>
+                                <TableCell sx={{textAlign: 'center'}}>
+                                    {request.material.map((mat)=>
+                                            (<p id={mat} key={mat}>
+                                                {(request.material.indexOf(mat)+1)+'. '+mat}
+                                            </p>))}
+                                </TableCell>
                                 <TableCell sx={{textAlign: 'center'}}>{request.finalMaterial}</TableCell>
-                                <Status id={request.id} isAdmin={false} initialState={request.status} timeStarted={request.timeleft} type="3dp"></Status>
+                                <TableCell sx={{textAlign: 'center'}}>
+                                    <StatusForContestant id={request.id} initialState={request.status} timeStarted={request.timeleft} type="laser"></StatusForContestant>
+                                </TableCell>
                                 <TableCell sx={{textAlign: 'center'}}>{request.comment}</TableCell>
                             </TableRow>
                                 )

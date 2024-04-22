@@ -12,7 +12,6 @@ import io from "socket.io-client";
 
 type StatusProps = {
     id:number;
-    isAdmin:boolean;
     initialState:string;
     timeStarted: Date;
     type:string;
@@ -27,21 +26,22 @@ type indRequestForStatus = {
 type broadcastRequest = {
     id: number
     status: string
+    timeCreated: Date
 }
 
-export default function Status( {id, isAdmin, initialState, timeStarted, type}: StatusProps ){
+export default function Status( {id, initialState, timeStarted, type}: StatusProps ){
     const router = useRouter();
     const [ timer, setTimer ] = useState<NodeJS.Timeout>();
-    const statusArray = ['等','到','過','切','完'];
+    const statusArray = ['等待確認','等待檔案','過號','製作中','已完成'];
     const { getLaserCutRequest, putLaserCutRequestStatus, putLaserCutRequestTimeLeft } = useLaserCutRequest();
     const { getThreeDPRequest, putThreeDPRequestStatus, putThreeDPRequestTimeLeft } = useThreeDPRequest();
     const [ requestList, setRequestList ] = useState<indRequestForStatus[]>();
     const select = useRef<HTMLDivElement>();
-    const [ current, setCurrent ] = useState("");//now status
-    const [ timeCreated, setTimeCreated] = useState<Date>(new Date())//the latest time switched to "到"
-    const [ countdown, setCountdown ] = useState(false);//whether counting down or not
-    const [ timeLeft, setTimeLeft ] = useState(0);//left time
-    const [ wrong, setWrong ] = useState(false);//pass number or not
+    const [ current, setCurrent ] = useState('等待確認');  //now status
+    const [ timeCreated, setTimeCreated] = useState<Date>(new Date());  //the latest time switched to "到"
+    const [ countdown, setCountdown ] = useState(false);  //whether counting down or not
+    const [ timeLeft, setTimeLeft ] = useState(0);  //left time
+    const [ wrong, setWrong ] = useState(false);  //pass number or not
     const [ flag, setFlag ] = useState(false);
     
     function checkID(req:indRequestForStatus){
@@ -73,7 +73,7 @@ export default function Status( {id, isAdmin, initialState, timeStarted, type}: 
             setCurrent(initialState)
         }
         setFlag(true);
-        if (initialState === "到"){
+        if (initialState === '等待檔案'){
             setCountdown(true)
             setTimeLeft(Math.trunc(20-(new Date().getTime()-new Date(timeStarted).getTime())/1000))
         }
@@ -96,13 +96,12 @@ export default function Status( {id, isAdmin, initialState, timeStarted, type}: 
 
     useEffect(()=>{
         if( flag === true ){
-            console.log(timeLeft);
             if(timeLeft <= 0){
                 clearInterval(timer);
                 setCountdown(false);
                 setWrong(true);
-                setCurrent("過")
-                handleStatusChange(id, "過")
+                setCurrent('過號')
+                handleStatusChange(id, '過號')
             }
         }
     },[timeLeft])
@@ -119,7 +118,8 @@ export default function Status( {id, isAdmin, initialState, timeStarted, type}: 
                 })
                 const broadcastChange: broadcastRequest = {
                     id: id,
-                    status: newStatus
+                    status: newStatus,
+                    timeCreated: new Date()
                 }
                 socket.emit('laserCutQueue', broadcastChange);
             }catch(e){
@@ -134,7 +134,8 @@ export default function Status( {id, isAdmin, initialState, timeStarted, type}: 
                 })
                 const broadcastChange: broadcastRequest = {
                     id: id,
-                    status: newStatus
+                    status: newStatus,
+                    timeCreated: new Date()
                 }
                 socket.emit('threeDPQueue', broadcastChange);
             }catch(e){
@@ -174,42 +175,32 @@ export default function Status( {id, isAdmin, initialState, timeStarted, type}: 
 
     return(
         <>
-            {isAdmin === true ? 
-            <>
-                <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">狀態</InputLabel>
-                        <Select
-                            ref={select}
-                            value={current}
-                            label="狀態"
-                            onChange={(e)=>{
-                                setCurrent(e.target.value);
-                                handleStatusChange(id, e.target.value);
-                                if(e.target.value === "到"){
-                                    setCountdown(true);
-                                    setTimeLeft(20);
-                                    handleTimeChange(id, new Date())
-                                }
-                                else{
-                                    setCountdown(false);
-                                }
-                            }}>
-                            <MenuItem value="等">等</MenuItem>
-                            <MenuItem value="到">到</MenuItem>
-                            <MenuItem value="切">切</MenuItem>
-                            <MenuItem value="完">完</MenuItem>
-                            <MenuItem value="過">過</MenuItem>
-                        </Select>
-                </FormControl>
-                <p className={countdown? "block" : "hidden"}>{timeLeft}</p>
-            </> :
-            <>
-                <div className="inline-flex flex-row">
-                    {current}
-                </div>
-                <p className={countdown? "block" : "hidden"}>{timeLeft}</p>
-            </>
-            }
+            <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">狀態</InputLabel>
+                    <Select
+                        ref={select}
+                        value={current}
+                        label="狀態"
+                        onChange={(e)=>{
+                            setCurrent(e.target.value);
+                            handleStatusChange(id, e.target.value);
+                            if(e.target.value === '等待檔案'){
+                                setCountdown(true);
+                                setTimeLeft(20);
+                                handleTimeChange(id, new Date())
+                            }
+                            else{
+                                setCountdown(false);
+                            }
+                        }}>
+                        <MenuItem value='等待確認'>等待確認</MenuItem>
+                        <MenuItem value='等待檔案'>等待檔案</MenuItem>
+                        <MenuItem value='製作中'>製作中</MenuItem>
+                        <MenuItem value='已完成'>已完成</MenuItem>
+                        <MenuItem value='過號'>過號</MenuItem>
+                    </Select>
+            </FormControl>
+            <p className={countdown? "block" : "hidden"}>{timeLeft}</p>
         </>
     )
 }
