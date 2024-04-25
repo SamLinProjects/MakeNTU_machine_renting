@@ -134,7 +134,6 @@ export default function LaserCutQueueListForAdmin() {
                                                     onChange={(e)=>{handleMachineChange(request.id, Number(e.target.value));}}>
                                                     <MenuItem value={0}>未安排</MenuItem>
                                                     <MenuItem value={1}>{Number(1)}</MenuItem>
-                                                    <MenuItem value={2}>{Number(2)}</MenuItem>
                                                 </Select>
                                         </FormControl>
                                     </TableCell>

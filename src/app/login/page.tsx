@@ -94,9 +94,9 @@ export default function Login() {
     return (
         <>
         <div className="h-8"></div>
-        <div className="m-2 flex flex-col items-center justify-between">
+        <div className="m-2 flex flex-col items-center justify-between bg-black">
             <div className="m-2 flex w-2/6 justify-center items-center gap-2 active:none">
-                <p className="font-bold">帳號：</p>
+                <p className="font-bold text-white">帳號：</p>
                 <InputArea
                     ref={usernameRef}
                     editable={true}
@@ -107,7 +107,7 @@ export default function Login() {
             </div>
             <div className="h-5"></div>
             <div className="m-2 flex w-2/6 justify-center items-center gap-2">
-                <p className="font-bold">密碼：</p>
+                <p className="font-bold text-white">密碼：</p>
                 <InputArea
                     ref={passwordRef}
                     value={password}

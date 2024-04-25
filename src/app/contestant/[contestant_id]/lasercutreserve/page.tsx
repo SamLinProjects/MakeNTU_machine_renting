@@ -20,8 +20,8 @@ export default function useReserve() {
     const [falseTitle, setFalseTitle] = useState(false);
     const [tooLong, setTooLong] = useState(false);
     const [NoteTooLong, setNoteTooLong] = useState(false);
-    const [material, setMaterial] = useState(["3mm密集板","5mm密集板","3mm壓克力","5mm壓克力"]);
-    const [materialBackUp, setMaterialBackUp] = useState(["3mm密集板","5mm密集板","3mm壓克力","5mm壓克力"]);
+    const [material, setMaterial] = useState(["3mm密集板","5mm密集板","3mm壓克力"]);
+    const [materialBackUp, setMaterialBackUp] = useState(["3mm密集板","5mm密集板","3mm壓克力"]);
     const [customized, setCustomized] = useState(false);
     const [open, setOpen] = useState(false);
 
@@ -87,7 +87,7 @@ export default function useReserve() {
     }
     
     return (
-        <div className="m-2 p-3 text-lg flex flex-col items-center justify-center justify-between">
+        <div className="p-5 text-lg flex flex-col items-center justify-center justify-between bg-black text-white">
 
             <div>
                 <div className="h-5"></div>
