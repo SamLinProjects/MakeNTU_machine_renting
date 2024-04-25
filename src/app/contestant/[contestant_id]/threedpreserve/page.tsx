@@ -73,7 +73,7 @@ export default function useReserve() {
     }
     
     return (
-        <div className="m-2 p-3 text-lg flex flex-col items-center justify-center justify-between">
+        <div className="p-10 text-lg flex flex-col items-center justify-center justify-between bg-black text-white h-full">
 
             <div>
                 <div className="h-5"></div>
@@ -128,7 +128,7 @@ export default function useReserve() {
                 {NoteTooLong && <p className="ml-20 w-5/6 pl-5 text-sm text-red-500">備註不可超過60字</p>}
             </div>
 
-            <div className="m-2 flex gap-2">
+            <div className="p-2 flex gap-2">
                 <button
                     className="m-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
                     onClick={() => router.push(`/contestant/${pathTemp[2]}`)}

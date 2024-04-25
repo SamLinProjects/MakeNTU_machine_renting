@@ -43,9 +43,9 @@ export default function useAdmin() {
     const handleRefresh = () => {
         window.location.reload();
     }
-   
+
     return (
-        <>
+        <div className="bg-black">
             <Map />
             <div className="flex items-center justify-center">
                 <button 
@@ -77,7 +77,7 @@ export default function useAdmin() {
                     <ThreeDPMachineList index={4}/> 
                 </div>
             </div>
-            <div className="h-9/10 w-1/2 m-2 flex flex-col items-center justify-top">
+            <div className="h-9/10 w-1/2 py-6 flex flex-col items-center justify-top">
                 <div className=" g-4 w-full flex flex-row items-end justify-end">
                     <button
                         className="m-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -85,6 +85,6 @@ export default function useAdmin() {
                     >登出</button>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
