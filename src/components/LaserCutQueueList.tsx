@@ -94,21 +94,6 @@ export default function LaserCutQueueList() {
         };
     }, [requestList]);
 
-    const testRequest = {
-        group: "team1",
-        filename: "test1",
-        type: "3DP",
-        status: "waiting",
-    };
-    const testUser1 = {
-        name: "team1", 
-        permission: "contestant",
-    }
-    const testUser2 = {
-        name: "team2", 
-        permission: "contestant",
-    }
-
     return (
         <>
         <div className="h-10 m-2 flex items-center justify-center cursor-pointer">
@@ -150,7 +135,7 @@ export default function LaserCutQueueList() {
                                                 {(request.material.indexOf(mat)+1)+'. '+mat}
                                             </p>))}
                                 </TableCell>
-                                <TableCell sx={{textAlign: 'center'}}>{request.finalMaterial}</TableCell>
+                                <TableCell sx={{textAlign: 'center', color: '#f97316', fontWeight: 'bold'}}>{request.finalMaterial}</TableCell>
                                 <TableCell sx={{textAlign: 'center'}}>
                                     <StatusForContestant id={request.id} initialState={request.status} timeStarted={request.timeleft} type="laser"></StatusForContestant>
                                 </TableCell>

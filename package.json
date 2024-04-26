@@ -6,6 +6,7 @@
     "dev": "node src/server.ts",
     "build": "next build",
     "start": "NODE_ENV=development node src/server.ts",
+    "deploy": "NODE_ENV=production node src/server.ts",
     "lint": "next lint",
     "generate": "prisma generate",
     "migrate": "prisma migrate dev --name init"

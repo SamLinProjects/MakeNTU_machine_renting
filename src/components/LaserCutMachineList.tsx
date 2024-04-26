@@ -13,6 +13,7 @@ import CommentDialog from "./CommentDialog";
 import { request } from "http";
 import { useRouter } from "next/navigation";
 import FinishedDialog from "./FinishedDialog";
+
 export type MachineListProps = {
     index: number;
 }

@@ -1,7 +1,9 @@
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import type { Account } from "@/context/Account";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
+
 export default function useAccount() {
     const router = useRouter();
     
@@ -24,10 +26,6 @@ export default function useAccount() {
         console.log(body.error)
         throw new Error(body.error);
       }
-      // router.refresh() is a Next.js function that refreshes the page without
-      // reloading the page. This is useful for when we want to update the UI
-      // from server components.
-      // console.log(res.json())
       router.refresh();
       return res.json();
     };

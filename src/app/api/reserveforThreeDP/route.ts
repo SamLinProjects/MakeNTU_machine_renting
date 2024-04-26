@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
             loadBearing: loadBearing,
             material: material,
             comment: comment,
-            status:"",
+            status:'等待確認',
             timeleft: test
           }
         }

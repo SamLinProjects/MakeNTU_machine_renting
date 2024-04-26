@@ -149,7 +149,7 @@ export default function LaserCutQueueListForAdmin() {
                                         <FormControl fullWidth>
                                             <InputLabel id="demo-simple-select-label">板材種類</InputLabel>
                                                 <Select
-                                                    defaultValue={request.material[0]}
+                                                    defaultValue={request.finalMaterial}
                                                     label="板材種類"
                                                     onChange={(e)=>{handleMaterialChange(request.id,e.target.value as string);}}
                                                     >   

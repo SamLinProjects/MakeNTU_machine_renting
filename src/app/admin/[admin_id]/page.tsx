@@ -58,7 +58,6 @@ export default function useAdmin() {
             <div className="flex w-full justify-center content-start">
                 <div className="flex w-4/5 justify-center">
                     <LaserCutMachineList index={1}/>
-                    <LaserCutMachineList index={2}/>
                 </div>
             </div>
             <div className="h-7"></div>
@@ -75,14 +74,6 @@ export default function useAdmin() {
                 <div className="flex w-4/5 justify-center">
                     <ThreeDPMachineList index={3}/>
                     <ThreeDPMachineList index={4}/> 
-                </div>
-            </div>
-            <div className="h-9/10 w-1/2 py-6 flex flex-col items-center justify-top">
-                <div className=" g-4 w-full flex flex-row items-end justify-end">
-                    <button
-                        className="m-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                        onClick={() => router.push("/")}
-                    >登出</button>
                 </div>
             </div>
         </div>

@@ -179,7 +179,7 @@ export default function useReserve() {
                     
                     className="resize-none w-full p-2 border-2 bg-black text-white text-base border-blue-500 focus:border-blue-300 focus:border-4 focus:outline-none"
                     value={comment}
-                    onChange={(e) => setComment(e.target.value)}
+                    onChange={(e)=>setComment(e.target.value)}
                 />
             </div>
 
