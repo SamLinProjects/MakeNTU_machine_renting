@@ -1,13 +1,13 @@
 import React from "react";
 import Image from "next/image";
-import map_path from "../../public/ntumap.jpg";
+import map_path from "../../public/machineMap.png";
 
 export default function Map() {
     return (
         <>
         <div className="w-800 h-full p-6 flex justify-center">
-            <div className="rounded border-2 border-gray-400">
-                <Image src={map_path} width={2000} height={1000} loading="lazy" alt="map" className="w-full h-full rounded" />
+            <div className="rounded border-4 border-gray-600">
+                <Image src={map_path} width={1500} height={750} loading="lazy" alt="map" className="w-full h-full rounded" />
             </div>
         </div>
         <div className="h-1"></div>
