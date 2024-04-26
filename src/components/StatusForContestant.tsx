@@ -3,12 +3,6 @@ import { useRouter } from "next/navigation";
 import useLaserCutRequest from "@/hooks/useLaserCutRequest";
 import useThreeDPRequest from "@/hooks/useThreeDPRequest";
 import { useRef } from "react";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import { setFips } from "crypto";
-import io from "socket.io-client";
 
 type StatusProps = {
     id:number;
@@ -36,11 +30,11 @@ export default function Status( {id, initialState, timeStarted, type}: StatusPro
     const { getThreeDPRequest, putThreeDPRequestStatus, putThreeDPRequestTimeLeft } = useThreeDPRequest();
     const [ requestList, setRequestList ] = useState<indRequestForStatus[]>();
     const select = useRef<HTMLDivElement>();
-    const [ current, setCurrent ] = useState("");//now status
-    const [ timeCreated, setTimeCreated] = useState<Date>(new Date())//the latest time switched to "到"
-    const [ countdown, setCountdown ] = useState(false);//whether counting down or not
-    const [ timeLeft, setTimeLeft ] = useState(0);//left time
-    const [ wrong, setWrong ] = useState(false);//pass number or not
+    const [ current, setCurrent ] = useState('等待確認');  // current status
+    const [ timeCreated, setTimeCreated] = useState<Date>(new Date());  // the latest time switched to "到"
+    const [ countdown, setCountdown ] = useState(false);  // whether counting down or not
+    const [ timeLeft, setTimeLeft ] = useState(0);  // left time
+    const [ wrong, setWrong ] = useState(false);  // pass number or not
     const [ flag, setFlag ] = useState(false);
     
     function checkID(req:indRequestForStatus){

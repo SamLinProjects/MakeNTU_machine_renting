@@ -41,14 +41,6 @@ export default function useContestant() {
             <Map />
             <LaserCutQueueListForContestant/>
             <ThreeDPQueueListForContestant/>
-            <div className="h-full p-2 flex flex-col items-center justify-center">
-                <div className="flex flex-row justify-between">
-                    <button
-                        className="m-1 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded"
-                        onClick={() => { router.push("/"); localStorage.clear();}}
-                    >登出</button>
-                </div>
-            </div>
         </div>
     )
 }

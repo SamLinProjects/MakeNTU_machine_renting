@@ -34,6 +34,7 @@ export const AccountProvider = ({ children }: Props) => {
     const router = useRouter();
     const [user, setAccount] = useState<Account | undefined>();
     const [userList, setUserList] = useState<Account[] | undefined>();
+    
     useEffect(() => {
         const userHook = async () => {
             const res = await fetch("/api/account", {
@@ -50,7 +51,6 @@ export const AccountProvider = ({ children }: Props) => {
             const UserListInit = await userHook();
             const UserListJson:Account[] = UserListInit["user"]
             setUserList(UserListJson)
-            console.log(UserListJson)
         }
         getUser();
         const token = localStorage.getItem("jwt-token: ");
@@ -69,7 +69,7 @@ export const AccountProvider = ({ children }: Props) => {
             const decodedPayload = decodeJWT(token);
             const name = decodedPayload?.username;
             if(!name) {
-                console.log("noname")
+                console.log("No name");
             }
             else{
                 const temp: Account|undefined = userList?.find( item => item.name === name) 
@@ -77,22 +77,7 @@ export const AccountProvider = ({ children }: Props) => {
             }
         }
     },[]);
-    // useEffect(() => {
-    //     const fetchAccount = async() => {
-    //         try {
-    //             const res = await fetch("/api/account");
-    //             const data = await res.json();
-    //             if (data?.messages) {
-    //               setAccount(data.messages);
-    //               console.log(data.messages);
-    //             }
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    //     fetchAccount();
-    // }, [])
-    
+
     return (
         <AccountContext.Provider value={{ user, setAccount }}>
             {children}
@@ -102,9 +87,5 @@ export const AccountProvider = ({ children }: Props) => {
 
 export function useAccountContext() {
     const context = useContext(AccountContext);
-    // uncomment this if you use the null default value
-    // if (!context) {
-    //   throw new Error("useCards must be used within a CardProvider");
-    // }
     return context;
   }

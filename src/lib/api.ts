@@ -1,7 +1,6 @@
 import { AccountRequest } from "@/context/Account";
 
 export const signInApi = async ({account, password}: AccountRequest) => {
-    // add login logic here
     const response = await fetch('/api/users', {
         method: 'GET',
         headers: {
@@ -19,8 +18,6 @@ export const signInApi = async ({account, password}: AccountRequest) => {
 }
 
 export const signUpApi = async ({account, password, permission}: AccountRequest) => {
-    // console.log(account, password, permission);
-    // add sign up logic here
     const response = await fetch('api/users', {
         method: 'POST',
         headers: {

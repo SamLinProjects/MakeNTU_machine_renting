@@ -17,9 +17,9 @@ export async function POST(req: NextRequest) {
             machine: 0, 
             filename: filename,
             material: material,
-            finalMaterial: "",
+            finalMaterial: material[0],
             comment: comment,
-            status: "",
+            status: '等待確認',
             timeleft: test,
           }
         }

@@ -4,9 +4,11 @@ import bcrypt from "bcrypt";
 import { env } from "../../../utils/env";
 import { type NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
+
 const prisma = new PrismaClient();
 const secretkey : string = process.env.PASSWORD_SECRET ? process.env.PASSWORD_SECRET : "Secret";
-console.log("Account API Called")
+console.log("Account API Called");
+
 export async function isAccountUnique(req: NextApiRequest, res: NextApiResponse) {
     const { username } = req.body;
     const result = await prisma.account.findMany({
@@ -19,7 +21,6 @@ export async function isAccountUnique(req: NextApiRequest, res: NextApiResponse)
 export async function POST(req: NextRequest) {
     
     const data = await req.json();
-    // console.log({data})
     const { username, password, permission, login } = data;
     if (!login) {
         try {
@@ -87,7 +88,7 @@ export async function POST(req: NextRequest) {
     }
 }
 
-export async function GET(req:NextRequest){
+export async function GET(req: NextRequest){
     try{
         const user = await prisma.account.findMany({
             select: {

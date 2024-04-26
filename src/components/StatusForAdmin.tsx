@@ -37,11 +37,11 @@ export default function Status( {id, initialState, timeStarted, type}: StatusPro
     const { getThreeDPRequest, putThreeDPRequestStatus, putThreeDPRequestTimeLeft } = useThreeDPRequest();
     const [ requestList, setRequestList ] = useState<indRequestForStatus[]>();
     const select = useRef<HTMLDivElement>();
-    const [ current, setCurrent ] = useState('等待確認');  //now status
-    const [ timeCreated, setTimeCreated] = useState<Date>(new Date());  //the latest time switched to "到"
-    const [ countdown, setCountdown ] = useState(false);  //whether counting down or not
-    const [ timeLeft, setTimeLeft ] = useState(0);  //left time
-    const [ wrong, setWrong ] = useState(false);  //pass number or not
+    const [ current, setCurrent ] = useState('等待確認');  // current status
+    const [ timeCreated, setTimeCreated] = useState<Date>(new Date());  // the latest time switched to "到"
+    const [ countdown, setCountdown ] = useState(false);  // whether counting down or not
+    const [ timeLeft, setTimeLeft ] = useState(0);  // left time
+    const [ wrong, setWrong ] = useState(false);  // pass number or not
     const [ flag, setFlag ] = useState(false);
     
     function checkID(req:indRequestForStatus){
