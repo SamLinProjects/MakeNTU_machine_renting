@@ -110,7 +110,7 @@ export default function useReserve() {
                 <p className="font-bold flex-end w-1/7 text-right">使用材料：&nbsp; PLA &nbsp;&nbsp;&nbsp;</p>
                 <div className="flex items-center">
                     <Checkbox style={{color: "yellow"}} onClick = {()=>setLoadBearing((prev) => (!prev))}></Checkbox>
-                    <p>需要支撐</p>
+                    <p>需要承重</p>
                 </div>
             </div>
             
