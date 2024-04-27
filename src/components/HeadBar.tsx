@@ -75,7 +75,7 @@ export default function HeadBar() {
         <div className="bg-black">
             <div className="h-5"></div>
             <div className="h-12 p-2 flex items-center justify-center cursor-pointer">
-                <h1 className="text-4xl font-bold text-blue-500" onClick={() => handleToMainPage()}>MakeNTU 機台租借網站</h1>
+                <h1 className="text-4xl font-bold text-blue-500" onClick={() => handleToMainPage()}>MakeNTU 機台借用申請網站</h1>
                 <div className="m-2 flex flex-row justify-end">
                     <div className="flex flex-row justify-between">
                         {(!login && pathname !== "/login") && <button

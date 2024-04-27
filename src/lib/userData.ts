@@ -7,7 +7,7 @@ export type Account = {
     password: string;
     permission: string;
 }
-export function getLoggedInUser ( {UserListJson} : {UserListJson: Account[]} ) {
+export function useGetLoggedInUser ( {UserListJson} : {UserListJson: Account[]} ) {
     const [account, setAccount] = useState<Account | undefined>()
     const token = localStorage.getItem("jwt-token: ");
     function decodeJWT(token: string): Record<string, any> | null {

@@ -7,7 +7,7 @@ export default function Map() {
         <>
         <div className="w-800 h-full p-6 flex justify-center">
             <div className="rounded border-4 border-gray-600">
-                <Image src={map_path} width={1500} height={750} loading="lazy" alt="map" className="w-full h-full rounded" />
+                <Image src={map_path} width={1000} height={500} loading="lazy" alt="map" className="w-full h-full rounded" />
             </div>
         </div>
         <div className="h-1"></div>

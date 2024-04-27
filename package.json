@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node src/server.ts",
+    "dev": "npx ts-node src/server.ts",
     "build": "next build",
-    "start": "NODE_ENV=development node src/server.ts",
-    "deploy": "NODE_ENV=production node src/server.ts",
     "lint": "next lint",
     "generate": "prisma generate",
-    "migrate": "prisma migrate dev --name init"
+    "migrate": "prisma migrate dev --name init",
+    "start": "NODE_ENV=development npx ts-node src/server.ts",
+    "deploy": "prisma generate && prisma migrate deploy && NODE_ENV=production npx ts-node src/server.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
