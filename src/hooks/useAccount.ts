@@ -10,7 +10,6 @@ export default function useAccount() {
     const createAccount = async ({
       username, password, permission
     }:{username: string, password: string, permission: string}) => {
-      console.log(username,password,permission)
       const res = await fetch("/api/account", {
         method: "POST",
         body: JSON.stringify({
@@ -59,9 +58,22 @@ export default function useAccount() {
       return res.json();
     }
 
+    const deleteUsers = async () => {
+      const res = await fetch("/api/account", {
+        method: "DELETE",
+      });
+      if (!res.ok) {
+        const body = await res.json();
+        throw new Error(body.error);
+      }
+      router.refresh();
+      return res.json();
+    }
+
     return {
       createAccount,
       getAccount,
-      getAccountbyToken
+      getAccountbyToken,
+      deleteUsers
     };
 }

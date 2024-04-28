@@ -52,7 +52,12 @@ export default function Login() {
         try {
             const { user: user, token: token } = await getAccount({ username, password });
             localStorage.setItem("jwt-token: ", token);
-            router.push(`/contestant/${username}`)
+            if (user.name.startsWith('contestant')) {
+                router.push(`/contestant/${username}`); 
+            }
+            else if (user.name.startsWith('admin')) {
+                router.push(`/admin/${username}`);
+            }
         } catch(error) {
             alert("登入失敗");
             console.log(error);
@@ -78,16 +83,6 @@ export default function Login() {
             return false;
         } else {
             return true;
-        }
-    }
-    const direct = () => {
-        if (permission === 'contestant')  {
-            router.push(`contestant/${username}`);
-        } else if (permission === 'admin') {
-            router.push(`admin/${username}`);
-        } else {
-            alert("找不到權限");
-            return;
         }
     }
 
@@ -129,11 +124,6 @@ export default function Login() {
                     onChange={(e) => setComfirmPassword(e)}
                 />
             </div>}
-            {!isSignUp && <div className="m-2 flex items-center justify-center gap-2">
-                <a className="m-1 text-xs font-bold underline hover:text-blue-800" onClick={() => setIsSignUp(true)}>
-                    <p>—第一次登入？註冊—</p>
-                </a>
-            </div>}
             <div className="m-2 flex gap-2">
                 <button
                     className="m-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
@@ -143,10 +133,6 @@ export default function Login() {
                     className="m-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
                     onClick={()=>handleLogin()}
                 >登入</button>}
-                {isSignUp && <button
-                    className="m-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={()=>handleRegister()}
-                >註冊</button>}
             </div>
         </div>
         </>

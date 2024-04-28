@@ -2,7 +2,6 @@ import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { env } from "../../../utils/env";
-import { type NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
@@ -91,6 +90,24 @@ export async function GET(req: NextRequest){
         });
         return NextResponse.json({user}, {status: 200});
     }catch(error){
+        console.log("error: ", error);
+        return NextResponse.json(
+            { error: "Something went wrong" },
+            { status: 500 },
+        );
+    }
+}
+
+export async function DELETE(req: NextRequest) {
+    try {
+        const deleteUser = await prisma.account.deleteMany({
+            where: {
+                name: { not: "admin0" }
+            }
+        });
+        return NextResponse.json({ message: "OK" }, { status: 200 });
+    }
+    catch(error) {
         console.log("error: ", error);
         return NextResponse.json(
             { error: "Something went wrong" },
